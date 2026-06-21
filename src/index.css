@@ -1,0 +1,331 @@
+/* =============================================================================
+   Magnifica humanitas — redaktionelles Design-System (React/Tailwind-Port)
+
+   Das vorhandene editoriale Design bleibt erhalten: warmes Papierweiß, Tinten-
+   Anthrazit, gedämpftes Petrol als Akzent, Fraunces (Serife) + Hanken Grotesk.
+   Tailwind liefert die Utilities; die typografischen Kernbausteine bleiben als
+   eigene Klassen, damit die Seite „aus einem Guss" wirkt.
+   ============================================================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === SCHRIFTEN — selbst gehostet, keine externen Anfragen (DSGVO) =========== */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-wght-italic.woff2') format('woff2-variations');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-grotesk-wght-italic.woff2') format('woff2-variations');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+
+/* === DESIGN-TOKENS =========================================================
+   Akzent an EINER Stelle ändern (siehe README, Abschnitt „Akzentfarbe ändern").*/
+:root {
+  --paper:        #F5F1E8;
+  --paper-deep:   #EDE7D9;
+  --ink:          #1E1B17;
+  --ink-soft:     #574E42;
+  --accent:       #2F5D54;
+  --accent-deep:  #234A42;
+  --hairline:        rgba(30, 27, 23, 0.18);
+  --hairline-strong: rgba(30, 27, 23, 0.32);
+
+  --measure:  40rem;
+  --rail:     11rem;
+  --gap:      3.25rem;
+  --page-pad: clamp(1.25rem, 5vw, 3.5rem);
+  --space-section: clamp(4.5rem, 9vw, 8rem);
+  --fs-body: clamp(1.0625rem, 0.98rem + 0.42vw, 1.1875rem);
+}
+
+/* === GRUNDLAGEN ============================================================= */
+@layer base {
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    font-size: var(--fs-body);
+    line-height: 1.72;
+    font-weight: 380;
+    letter-spacing: 0.003em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Dezente Papier-/Korn-Textur (sehr niedrige Deckkraft, ohne Interaktion) */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none; opacity: 0.035; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 1px; }
+}
+
+/* === LAYOUT & TYPO-BAUSTEINE =============================================== */
+@layer components {
+  /* Sprunglink */
+  .skip-link {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    background: var(--ink); color: var(--paper);
+    padding: 0.6rem 1rem; font-size: 0.95rem; text-decoration: none;
+    transition: top 0.18s ease;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  .page { position: relative; z-index: 2; }
+
+  /* Asymmetrisches Raster: schmale Randspalte + breite Lesespalte, zentriert */
+  .spread {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, var(--measure));
+    column-gap: var(--gap);
+    justify-content: center;
+    padding-inline: var(--page-pad);
+  }
+  .spread > .col-main { grid-column: 2; }
+  .spread > .col-wide { grid-column: 1 / -1; }
+
+  .rail { grid-column: 1; align-self: start; padding-top: 0.4rem; }
+  .rail .num {
+    font-family: 'Fraunces', serif; font-weight: 460; font-size: 1.05rem;
+    color: var(--accent); font-variant-numeric: tabular-nums; display: block;
+  }
+  .rail .tag {
+    margin-top: 0.5rem; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  .section { padding-block: var(--space-section); }
+  .section + .section { border-top: 1px solid var(--hairline); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif; font-weight: 420; color: var(--ink);
+    margin: 0; text-wrap: balance;
+  }
+
+  .section-title {
+    font-size: clamp(1.65rem, 1.2rem + 2vw, 2.6rem);
+    line-height: 1.12; letter-spacing: -0.015em; margin-bottom: 1.6rem;
+  }
+
+  h3.sub {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.2rem, 1rem + 0.7vw, 1.45rem);
+    line-height: 1.2; letter-spacing: -0.01em;
+  }
+
+  .prose-p { margin: 0 0 1.25rem; max-width: var(--measure); }
+  .prose-p:last-child { margin-bottom: 0; }
+
+  /* Initialbuchstabe (Drop Cap) */
+  .lede::first-letter {
+    font-family: 'Fraunces', serif; font-weight: 500; float: left;
+    font-size: 3.9em; line-height: 0.78; padding-right: 0.09em;
+    margin-top: 0.06em; color: var(--accent);
+  }
+
+  /* Akzentuiertes Schlüsselwort im Fließtext */
+  .key { color: var(--accent-deep); font-weight: 600; }
+
+  a {
+    color: var(--accent-deep); text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 0.16em;
+    text-decoration-color: var(--hairline-strong);
+    transition: color 0.18s ease, text-decoration-color 0.18s ease;
+  }
+  a:hover { color: var(--ink); text-decoration-color: var(--accent); }
+
+  .kicker {
+    font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 1.1rem;
+  }
+
+  /* Fußnoten-artige Quellenangabe (z. B. „(MH 9)") */
+  .cite {
+    font-size: 0.82em; font-weight: 600; color: var(--accent);
+    white-space: nowrap; letter-spacing: 0.01em;
+  }
+
+  /* --- Pull-Quotes (visueller Kern) --- */
+  .pullquote { margin: 0; max-width: 52rem; }
+  .pullquote blockquote {
+    margin: 0; font-family: 'Fraunces', serif; font-style: italic; font-weight: 380;
+    font-size: clamp(1.75rem, 1.1rem + 3.1vw, 3.25rem); line-height: 1.16;
+    letter-spacing: -0.02em; color: var(--ink); text-wrap: balance;
+  }
+  .pullquote blockquote::before { content: "„"; color: var(--accent); font-style: normal; margin-right: 0.02em; }
+  .pullquote blockquote::after  { content: "\201C"; color: var(--accent); font-style: normal; }
+  .pullquote figcaption {
+    margin-top: 1.5rem; font-size: 0.86rem; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--ink-soft);
+  }
+  .pullquote figcaption .src { color: var(--accent); }
+  .pullquote--feature { border-block: 1px solid var(--hairline); padding-block: clamp(2.5rem, 5vw, 4rem); }
+
+  /* --- Drei Gefahren: redaktionelle Absätze mit Randnummer (keine Karten) --- */
+  .hazard {
+    display: grid; grid-template-columns: 2.5rem 1fr; column-gap: 1.5rem;
+    padding-block: 2rem; align-items: start;
+  }
+  .hazard + .hazard { border-top: 1px solid var(--hairline); }
+  .hazard .h-num {
+    font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 440;
+    color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; padding-top: 0.15rem;
+  }
+  .hazard h3 { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 480; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+
+  /* --- Chance / Risiko: zweispaltiger Kontrast mit Haarlinie --- */
+  .contrast { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .contrast > div { padding: 0.4rem 2rem; }
+  .contrast > div:first-child { padding-left: 0; }
+  .contrast > div:last-child { padding-right: 0; border-left: 1px solid var(--hairline); }
+  .contrast h3 {
+    font-family: 'Hanken Grotesk', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem; color: var(--ink-soft);
+  }
+  .contrast .label-chance { color: var(--accent); }
+
+  /* --- Drei Grundregeln (Herzstück) --- */
+  .principles { margin: 0; padding: 0; list-style: none; counter-reset: pr; }
+  .principles li {
+    counter-increment: pr; display: grid; grid-template-columns: 3.25rem 1fr;
+    column-gap: 1.5rem; padding-block: 1.6rem; align-items: baseline;
+  }
+  .principles li + li { border-top: 1px solid var(--hairline); }
+  .principles li::before {
+    content: counter(pr, decimal-leading-zero); font-family: 'Fraunces', serif;
+    font-size: 1.15rem; color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .principles h3 { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 480; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+
+  /* --- Podcast --- */
+  .podcast { background: var(--paper-deep); border-block: 1px solid var(--hairline); }
+  .voices {
+    list-style: none; margin: 0 0 2rem; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 2rem;
+  }
+  .voices li { padding-top: 0.85rem; border-top: 1px solid var(--hairline); }
+  .voices .name { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 480; display: block; }
+  .voices .role { font-size: 0.9rem; color: var(--ink-soft); }
+
+  /* Ruhiger Outline-Button / Text-Link „Skript nachlesen" */
+  .btn {
+    display: inline-block; font-size: 0.86rem; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--ink); background: transparent; border: 1px solid var(--hairline-strong);
+    padding: 0.7rem 1.4rem; text-decoration: none; cursor: pointer;
+    transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn:active { background: var(--paper); transform: translateY(1px); }
+
+  /* --- Reflexion: vier Fragen --- */
+  .questions { margin: 0; padding: 0; list-style: none; counter-reset: q; }
+  .questions li {
+    counter-increment: q; display: grid; grid-template-columns: 3.5rem 1fr;
+    column-gap: 1.5rem; padding-block: 1.7rem; align-items: baseline;
+  }
+  .questions li + li { border-top: 1px solid var(--hairline); }
+  .questions li::before {
+    content: counter(q); font-family: 'Fraunces', serif; font-size: 2.1rem;
+    font-weight: 360; color: var(--accent); line-height: 0.9;
+  }
+  .questions p {
+    margin: 0; font-family: 'Fraunces', serif;
+    font-size: clamp(1.2rem, 1rem + 0.7vw, 1.5rem); font-weight: 400;
+    line-height: 1.34; color: var(--ink);
+  }
+
+  /* --- Quellen / Bildnachweis / Recht --- */
+  .sources { font-size: 0.95rem; color: var(--ink-soft); }
+  .sources dl { margin: 0 0 1.8rem; }
+  .sources dt { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .sources dd { margin: 0.15rem 0 0.9rem; }
+  .sources .full-cite { font-family: 'Fraunces', serif; font-size: 1.05rem; line-height: 1.5; color: var(--ink); margin-bottom: 1.2rem; }
+  .sources .note { padding-top: 1.2rem; border-top: 1px solid var(--hairline); font-size: 0.86rem; }
+
+  /* Bild + Bildunterschrift (sichtbare Lizenzangabe) */
+  .figure { margin: 0; }
+  .figure img, .figure .img-frame { width: 100%; border: 1px solid var(--hairline); }
+  .figure figcaption {
+    margin-top: 0.65rem; font-size: 0.78rem; line-height: 1.5; color: var(--ink-soft);
+  }
+  .figure figcaption a { font-weight: 600; }
+
+  /* Rahmen für Hero-Medien (3D-Modell / Foto) */
+  .media-frame {
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    background: var(--paper-deep);
+  }
+  /* Sehr dezente, einheitliche Bildanmutung (harmoniert mit der Papierfarbe) */
+  .figure img, .media-frame img { filter: saturate(0.95) contrast(1.015); }
+
+  /* Kopf-/Fußbereich */
+  .masthead-bar {
+    position: relative; z-index: 3; display: flex; justify-content: space-between;
+    align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1rem var(--page-pad);
+    border-bottom: 1px solid var(--hairline); font-size: 0.74rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .masthead-bar .accent { color: var(--accent); }
+
+  .site-footer {
+    position: relative; z-index: 2; padding: 2.5rem var(--page-pad) 3.5rem;
+    border-top: 1px solid var(--hairline-strong); font-size: 0.8rem;
+    letter-spacing: 0.04em; color: var(--ink-soft); text-align: center;
+  }
+  .site-footer nav { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .site-footer nav a { color: var(--ink-soft); }
+}
+
+/* === RESPONSIVE — Mobile-first ============================================= */
+@media (max-width: 48rem) {
+  .spread { grid-template-columns: minmax(0, var(--measure)); }
+  .spread > .col-main, .spread > .col-wide { grid-column: 1; }
+  .rail { grid-column: 1; display: flex; align-items: baseline; gap: 0.9rem; margin-bottom: 1.4rem; padding-top: 0; }
+  .rail .num { font-size: 1rem; }
+  .rail .tag { margin-top: 0; }
+  .contrast { grid-template-columns: 1fr; }
+  .contrast > div { padding: 0; }
+  .contrast > div:first-child { padding-bottom: 2rem; }
+  .contrast > div:last-child { padding-top: 2rem; border-left: 0; border-top: 1px solid var(--hairline); }
+  .voices { grid-template-columns: 1fr; }
+}
+
+/* Dezente Bewegung des Spotlight-Scheins (nur bei erlaubter Bewegung aktiv) */
+@keyframes spotlight {
+  0%   { transform: translate(-6%, -4%) scale(1); opacity: 0.10; }
+  100% { transform: translate(4%, 3%) scale(1.12); opacity: 0.18; }
+}
+
+/* === REDUCED MOTION ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

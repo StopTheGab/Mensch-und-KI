@@ -1,0 +1,17 @@
+# Abhängigkeiten & Build
+node_modules/
+dist/
+.vercel/
+*.tsbuildinfo
+
+# Werkzeuge / Entwicklung
+temporary screenshots/
+
+# Claude-Code-Infrastruktur (nicht Teil des Projekts)
+.claude/
+plugins/
+CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
