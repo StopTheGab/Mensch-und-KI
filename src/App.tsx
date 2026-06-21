@@ -442,12 +442,7 @@ export default function App() {
                   Hotlinks). Die Fotos wurden für das Web skaliert.
                 </p>
                 <dl>
-                  <dt>3D-Modell (Kopfbereich)</dt>
-                  <dd>
-                    Stilisierte Basilika mit Kuppel · eigenes, prozedural erzeugtes Modell
-                    (<code>scripts/make-model.mjs</code>) · CC0 (gemeinfrei).
-                  </dd>
-                  <dt>Petersdom, Westfassade (Kopfbereich / Fallback)</dt>
+                  <dt>Petersdom, Westfassade (Kopfbereich)</dt>
                   <dd>
                     Foto: Livioandronico2013 / Wikimedia&nbsp;Commons —{" "}
                     <a
@@ -563,21 +558,13 @@ export default function App() {
                   keine Verbindung zu Google&nbsp;Fonts oder einem anderen Schrift-CDN.
                 </p>
                 <h3 className="sub" style={{ marginTop: "1.5rem", marginBottom: "0.6rem" }}>
-                  Interaktives 3D-Modell
+                  Bilder
                 </h3>
                 <p className="prose-p">
-                  Das 3D-Modell im Kopfbereich wird <strong>vollständig lokal</strong>{" "}
-                  ausgeliefert: Sowohl die Anzeige-Komponente (<code>model-viewer</code>)
-                  als auch das Modell selbst liegen auf demselben Server wie die Seite.
-                  Es besteht <strong>keine Verbindung zu Drittanbietern</strong>; es werden
-                  keine Daten an Externe übertragen.
-                </p>
-                <p className="prose-p">
-                  Hinweis für eine optionale Variante: Würde die Seite stattdessen auf eine{" "}
-                  <em>Spline</em>-Szene umgestellt (siehe Projekt-README), lüde sie Inhalte
-                  von <code>prod.spline.design</code> (Drittanbieter); dabei könnte die
-                  IP-Adresse übertragen werden. Diese Variante ist hier{" "}
-                  <strong>nicht</strong> aktiv.
+                  Alle Bilder werden <strong>lokal</strong> von demselben Server wie die
+                  Seite ausgeliefert (keine Hotlinks, keine Einbettung von fremden
+                  Servern). Es besteht <strong>keine Verbindung zu Drittanbietern</strong>;
+                  es werden keine Daten an Externe übertragen.
                 </p>
                 <p className="note">
                   Verantwortlich im Sinne des Datenschutzrechts ist die im{" "}

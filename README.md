@@ -6,9 +6,10 @@ begleitenden Podcast *„Mensch bleiben"*.
 
 Das ruhige, redaktionelle (print-inspirierte) Design bleibt erhalten — warmes
 Papierweiß, Serifen-Überschriften (Fraunces), große Pull-Quotes, römische
-Abschnittsnummern in der Akzentfarbe. Neu hinzugekommen sind ein **interaktiver
-3D-Hero (Vatikan)**, dezente **Scroll-Einblendungen**, eine **thematische Galerie**
-und vollständige **rechtliche Angaben** (Impressum, Datenschutz, Bildnachweis).
+Abschnittsnummern in der Akzentfarbe. Hinzugekommen sind ein **ruhiges
+Foto-Hero (Petersdom)**, dezente **Scroll-Einblendungen**, eine **thematische
+Galerie** und vollständige **rechtliche Angaben** (Impressum, Datenschutz,
+Bildnachweis).
 
 ---
 
@@ -18,11 +19,9 @@ und vollständige **rechtliche Angaben** (Impressum, Datenschutz, Bildnachweis).
 - **Tailwind CSS** (eigene Tokens für die editoriale Farbwelt) + **shadcn-Struktur**
   (`src/components/ui`, `src/lib/utils.ts`, `components.json`)
 - **framer-motion** (dezente Bewegung, respektiert `prefers-reduced-motion`)
-- **@google/model-viewer** — interaktives 3D-Modell, **lokal** gehostet (Standardweg)
-- **@splinetool/react-spline** + **@splinetool/runtime** — Spline als optionale 3D-Alternative
 - **lucide-react** (Icons)
-- Schriften, 3D-Modell **und Bilder selbst gehostet** (`public/`), **keine** externen
-  Server (kein Google-Fonts-CDN, kein 3D-Drittanbieter) → DSGVO-freundlich
+- Schriften **und Bilder selbst gehostet** (`public/`), **keine** externen Server
+  (kein Google-Fonts-CDN, keine eingebetteten Drittanbieter) → DSGVO-freundlich
 
 ### Projektstruktur
 
@@ -31,25 +30,19 @@ und vollständige **rechtliche Angaben** (Impressum, Datenschutz, Bildnachweis).
 ├── index.html                  # Vite-Einstieg (+ Font-Preload)
 ├── public/
 │   ├── fonts/                  # selbst gehostete Schriften (woff2)
-│   ├── images/                 # lizenzierte Bilder (Wikimedia Commons), lokal
-│   └── models/basilika.glb     # eigenes CC0-3D-Modell
-├── scripts/make-model.mjs      # erzeugt das CC0-3D-Modell (basilika.glb)
+│   └── images/                 # lizenzierte Bilder (Wikimedia Commons), lokal
 ├── src/
 │   ├── main.tsx                # React-Einstieg
 │   ├── App.tsx                 # gesamte Seite: Abschnitte I–X + Galerie + Recht
 │   ├── index.css               # Design-System (Tokens, @font-face, Bausteine)
-│   ├── model-viewer.d.ts       # JSX-Typen für <model-viewer>
 │   ├── lib/utils.ts            # cn()-Helfer (shadcn)
 │   └── components/
-│       ├── Hero.tsx            # Hero: 3D-Modell + lizenziertes Foto-Fallback
-│       ├── Model3D.tsx         # <model-viewer> (lazy, lokal) — Standard-3D
+│       ├── Hero.tsx            # Hero: Titel + ruhiges Petersdom-Foto
 │       ├── Section.tsx         # Raster-Baustein (Randnummer + Lesespalte)
 │       ├── Reveal.tsx          # framer-motion Scroll-Einblendung
 │       ├── EditorialArt.tsx    # eigene CC0-Strichgrafiken
 │       └── ui/
 │           ├── card.tsx                       # shadcn Card
-│           ├── spotlight.tsx                   # dezenter Akzent-Schein
-│           ├── splite.tsx                      # SplineScene (lazy) — Alternative
 │           └── interactive-bento-gallery.tsx   # Galerie (Lightbox, Bild/Grafik)
 ├── tailwind.config.js · postcss.config.js · components.json
 ├── vite.config.ts · tsconfig*.json
@@ -76,37 +69,20 @@ npm run preview    # serviert dist/ auf http://localhost:3000
 
 ---
 
-## 3D-Modell  ·  rechtlich sauber & DSGVO-konform
+## Hero-Bild
 
-Die Seite zeigt im Hero ein **interaktives 3D-Modell** einer stilisierten Basilika
-mit Kuppel. Es ist bereits **fertig eingebunden** und läuft sofort:
+Der Hero zeigt ein **ruhiges, dokumentarisches Foto** des Petersdoms neben dem
+Titel — dezent an die Papierfarbe angeglichen (entsättigt + sehr leise
+Akzent-Lasur, CSS-Klasse `.hero-photo` in `index.css`). Das Bild ist lizenziert,
+lokal eingebunden und mit sichtbarer Quellen-/Lizenzangabe versehen.
 
-- Angezeigt mit **`<model-viewer>`** (Google, quelloffen), **lokal gebündelt** —
-  keine Verbindung zu Drittanbietern.
-- Das Modell **`public/models/basilika.glb`** ist ein **eigenes, prozedural
-  erzeugtes CC0-Modell** (kein fremdes Urheberrecht). Erzeugt von
-  [`scripts/make-model.mjs`](scripts/make-model.mjs) — neu bauen mit:
-  ```bash
-  node scripts/make-model.mjs
-  ```
-- Lädt **lazy** (eigener Chunk). Bei `prefers-reduced-motion: reduce` wird statt des
-  3D-Modells ein statisches, lizenziertes Foto des Petersdoms gezeigt.
+**Foto austauschen:** Datei nach `public/images/` legen und in
+[`src/components/Hero.tsx`](src/components/Hero.tsx) `src`, `alt`, `width/height`
+sowie die Bildunterschrift (Urheber, Quelle, Lizenz) anpassen. Den Eintrag im
+Abschnitt **Bildnachweis** (`App.tsx`) mitführen.
 
-### Eigenes Modell verwenden
-
-Eigene `.glb`-Datei nach `public/models/` legen und in
-[`src/components/Model3D.tsx`](src/components/Model3D.tsx) `src="/models/…glb"`
-anpassen. Stammt die Datei nicht von dir, nur **CC0/CC-BY-Modelle** verwenden (z. B.
-von **Sketchfab**, **Smithsonian Open Access**) und bei **CC-BY** Urheber/Quelle/
-Lizenz im Abschnitt **Bildnachweis** ergänzen. Datei stets **lokal** ablegen.
-
-### Alternative: Spline
-
-Wer lieber eine **Spline**-Szene möchte: Die Einbindung liegt fertig in
-[`src/components/ui/splite.tsx`](src/components/ui/splite.tsx). In `Hero.tsx` `Model3D`
-durch `SplineScene` ersetzen und eine **eigene oder frei lizenzierte** Szene-URL
-setzen. **Achtung:** Spline lädt dann von `prod.spline.design` (Drittanbieter) —
-das ist in der Datenschutzerklärung zu nennen (Textbaustein ist vorbereitet).
+> Frühere 3D-Varianten (model-viewer / Spline) wurden entfernt, da die Seite nun
+> bewusst nur ein einzelnes ruhiges Foto im Hero nutzt.
 
 ---
 
@@ -118,10 +94,9 @@ Abschnitt **„Bildnachweis"** (in `App.tsx`, `id="bildnachweis"`). Aktuell verw
 
 | Datei | Motiv | Quelle / Urheber | Lizenz |
 | --- | --- | --- | --- |
-| `images/vatikan-facade.jpg` | Petersdom, Westfassade (Hero-Foto / Fallback) | Livioandronico2013 / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:St_Peter_facade.jpg) | CC BY-SA 4.0 |
+| `images/vatikan-facade.jpg` | Petersdom, Westfassade (Hero-Foto) | Livioandronico2013 / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:St_Peter_facade.jpg) | CC BY-SA 4.0 |
 | `images/vatikan-night.jpg` | Petersdom bei Nacht (Galerie) | Livioandronico2013 / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Saint_Peter%27s_Basilica_at_night_HD.jpg) | CC BY-SA 4.0 |
 | `images/erschaffung-adams.jpg` | Michelangelo, *Die Erschaffung Adams* (Galerie + Würde) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Michelangelo_-_Creation_of_Adam_(cropped).jpg) | gemeinfrei (PD) |
-| `models/basilika.glb` | 3D-Modell (Hero) | eigenes Modell (`make-model.mjs`) | CC0 |
 | Strichgrafiken | Galerie „Objektivität", Begrenztheit | eigene Illustrationen | CC0 |
 
 Die Fotos wurden für das Web **skaliert** — das ist im Bildnachweis vermerkt, wie es
@@ -156,12 +131,8 @@ eingetragen:
 ## Datenschutz
 
 Eine kurze Datenschutzerklärung ist als Abschnitt enthalten (im Footer verlinkt):
-keine Tracker, keine Analytics, keine Cookies. Schriften, **3D-Modell und Bilder
-sind selbst gehostet** — es bestehen **keine** Verbindungen zu Drittanbietern.
-
-Nur falls du auf die **Spline**-Variante umstellst, lädt die Seite von
-`prod.spline.design` (Drittanbieter); ein entsprechender Textbaustein ist in der
-Datenschutzerklärung bereits vorbereitet (derzeit als „nicht aktiv" gekennzeichnet).
+keine Tracker, keine Analytics, keine Cookies. **Schriften und Bilder sind selbst
+gehostet** — es bestehen **keine** Verbindungen zu Drittanbietern.
 
 ---
 
@@ -223,8 +194,8 @@ Schriften.
 - WCAG-AA-Kontraste; sinnvolle `alt`-/Grafik-Beschreibungen.
 - `prefers-reduced-motion` wird überall respektiert (keine Bewegung, 3D wird durch
   ein statisches Bild ersetzt).
-- 3D-Modell und Galerie werden **lazy** geladen; das schwere Spline-Bundle wird nur
-  geladen, wenn eine Szene gesetzt ist.
+- Bilder werden mit `loading="lazy"` nachgeladen; das Hero-Foto trägt
+  `width`/`height` gegen Layout-Sprünge.
 - Mobile-first, responsiv.
 
 ---

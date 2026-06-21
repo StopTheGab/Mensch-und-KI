@@ -1,27 +1,16 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Spotlight } from "@/components/ui/spotlight";
-import { Model3D } from "@/components/Model3D";
 
-/* Hero — Titel + interaktives 3D-Modell, im hellen, editorialen Stil.
+/* Hero — Titel + ein einzelnes, ruhiges dokumentarisches Foto (Petersdom),
+   dezent an die Papierfarbe angeglichen. Kein 3D, kein Stock-Look.
 
-   3D-MODELL
-   • Standardweg: <model-viewer> mit dem EIGENEN CC0-Modell
-     (public/models/basilika.glb, erzeugt von scripts/make-model.mjs).
-     Lokal gehostet → keine Drittanbieter, DSGVO-sauber, rechtlich unbedenklich.
-   • Bei prefers-reduced-motion wird statt des 3D-Modells ein statisches,
-     lizenziertes Foto des Petersdoms gezeigt (Wikimedia Commons, CC BY-SA 4.0).
-
-   ALTERNATIVE (Spline)
-   • Wer stattdessen eine eigene/lizenzierte Spline-Szene nutzen möchte, findet
-     die fertige Einbindung in src/components/ui/splite.tsx (siehe README).      */
+   Bild: lizenziert (Wikimedia Commons, CC BY-SA 4.0), lokal eingebunden, mit
+   sichtbarer Quellen-/Lizenzangabe in der Bildunterschrift und gesammelt im
+   Abschnitt „Bildnachweis".                                                   */
 export function Hero() {
   const reduce = useReducedMotion();
 
   return (
     <header className="relative overflow-hidden border-b border-hairline">
-      {/* sehr dezenter Akzent-Schein auf hellem Grund */}
-      <Spotlight className="left-1/2 top-[-6rem] h-[34rem] w-[34rem]" opacity={0.14} />
-
       <div className="spread relative z-10 items-center gap-y-10 py-[clamp(3rem,7vw,6rem)]">
         {/* Randspalte */}
         <div className="rail">
@@ -29,7 +18,7 @@ export function Hero() {
           <span className="tag">Lese-Feature</span>
         </div>
 
-        <div className="col-main grid items-center gap-x-10 gap-y-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="col-main grid items-center gap-x-12 gap-y-9 lg:grid-cols-[1.05fr_0.92fr]">
           {/* Typografischer Block */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 18 }}
@@ -53,39 +42,33 @@ export function Hero() {
             </p>
           </motion.div>
 
-          {/* 3D-Modell bzw. statisches, lizenziertes Foto */}
-          <figure className="m-0">
-            <div className="media-frame relative h-[18rem] sm:h-[22rem] lg:h-[26rem]">
-              {reduce ? (
-                <img
-                  src="/images/vatikan-facade.jpg"
-                  alt="Petersdom im Vatikan, Westfassade mit Kuppel"
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <Model3D />
-              )}
+          {/* Ruhiges dokumentarisches Foto */}
+          <motion.figure
+            className="m-0"
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="hero-photo media-frame">
+              <img
+                src="/images/vatikan-facade.jpg"
+                alt="Petersdom im Vatikan, Westfassade mit der großen Kuppel"
+                width={1920}
+                height={1272}
+                className="w-full"
+              />
             </div>
             <figcaption className="mt-3 text-xs leading-relaxed text-ink-soft">
-              {reduce ? (
-                <>
-                  Petersdom, Vatikan · Foto: Livioandronico2013 / Wikimedia&nbsp;Commons ·{" "}
-                  <a
-                    href="https://creativecommons.org/licenses/by-sa/4.0/deed.de"
-                    target="_blank"
-                    rel="noopener noreferrer license"
-                  >
-                    CC&nbsp;BY-SA&nbsp;4.0
-                  </a>
-                </>
-              ) : (
-                <>
-                  Interaktiv: zum Drehen ziehen. Stilisierte Basilika · eigenes 3D-Modell ·
-                  CC0 — siehe <a href="#bildnachweis">Bildnachweis</a>.
-                </>
-              )}
+              Petersdom, Vatikan · Foto: Livioandronico2013 / Wikimedia&nbsp;Commons ·{" "}
+              <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+                target="_blank"
+                rel="noopener noreferrer license"
+              >
+                CC&nbsp;BY-SA&nbsp;4.0
+              </a>
             </figcaption>
-          </figure>
+          </motion.figure>
         </div>
       </div>
     </header>
