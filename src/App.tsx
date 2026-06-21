@@ -1,7 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
-import { EditorialArt } from "@/components/EditorialArt";
 import {
   InteractiveBentoGallery,
   type BentoItem,
@@ -250,12 +249,17 @@ export default function App() {
             </Reveal>
 
             <Reveal as="figure" className="figure" delay={0.05}>
-              <EditorialArt
-                motif="horizon"
-                title="Ruhiger Horizont mit einzelner aufsteigender Linie — eigene Strichgrafik"
-              />
+              <div className="aspect-[3/2] w-full overflow-hidden border border-hairline bg-ink">
+                <img
+                  src="/images/haende-alter.jpg"
+                  alt="Eine junge Hand hält die faltige Hand eines alten Menschen, Schwarz-Weiß-Aufnahme vor dunklem Grund"
+                  loading="lazy"
+                  className="h-full w-full object-cover object-[50%_44%] !border-0"
+                />
+              </div>
               <figcaption>
-                Eigene Illustration · CC0 (Public Domain). Quelle: Seitenautor — siehe{" "}
+                Hände zweier Generationen · Foto: Jclk8888 / Pixabay (via
+                Wikimedia&nbsp;Commons) · gemeinfrei (CC0) — siehe{" "}
                 <a href="#bildnachweis">Bildnachweis</a>.
               </figcaption>
             </Reveal>
@@ -439,9 +443,9 @@ export default function App() {
                 </h2>
                 <p className="prose-p">
                   Es werden ausschließlich Medien mit klarer Lizenz verwendet:
-                  lizenzierte Fotos von Wikimedia&nbsp;Commons, gemeinfreie Kunstwerke
-                  sowie eigene Grafiken. Alle Dateien sind lokal eingebunden (keine
-                  Hotlinks). Die Fotos wurden für das Web skaliert.
+                  lizenzierte Fotos von Wikimedia&nbsp;Commons und gemeinfreie
+                  Kunstwerke. Alle Dateien sind lokal eingebunden (keine Hotlinks).
+                  Die Fotos wurden für das Web skaliert.
                 </p>
                 <dl>
                   <dt>Petersdom, Westfassade (Kopfbereich)</dt>
@@ -509,8 +513,18 @@ export default function App() {
                     </a>
                     , gemeinfrei (Public Domain).
                   </dd>
-                  <dt>Strichgrafik (Abschnitt „Begrenztheit")</dt>
-                  <dd>Eigene Illustration des Seitenautors · CC0 (gemeinfrei).</dd>
+                  <dt>Hände zweier Generationen (Abschnitt „Begrenztheit")</dt>
+                  <dd>
+                    Foto: Jclk8888 / Pixabay, via{" "}
+                    <a
+                      href="https://commons.wikimedia.org/wiki/File:Hands-699486.jpg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Wikimedia&nbsp;Commons
+                    </a>
+                    , gemeinfrei (CC0).
+                  </dd>
                 </dl>
                 <p className="note">
                   Hinweis zu <strong>CC&nbsp;BY-SA&nbsp;4.0</strong>: Pflicht zur

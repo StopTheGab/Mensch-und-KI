@@ -97,7 +97,8 @@ Abschnitt **„Bildnachweis"** (in `App.tsx`, `id="bildnachweis"`). Aktuell verw
 | `images/vatikan-facade.jpg` | Petersdom, Westfassade (Hero-Foto) | Livioandronico2013 / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:St_Peter_facade.jpg) | CC BY-SA 4.0 |
 | `images/vatikan-night.jpg` | Petersdom bei Nacht (Galerie) | Livioandronico2013 / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Saint_Peter%27s_Basilica_at_night_HD.jpg) | CC BY-SA 4.0 |
 | `images/erschaffung-adams.jpg` | Michelangelo, *Die Erschaffung Adams* (Galerie + Würde) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Michelangelo_-_Creation_of_Adam_(cropped).jpg) | gemeinfrei (PD) |
-| Strichgrafiken | Galerie „Objektivität", Begrenztheit | eigene Illustrationen | CC0 |
+| `images/justitia.jpg` | Justitia, Gerechtigkeitsbrunnen Bern (Galerie „Objektivität") | TheBernFiles / [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Berner_Iustitia.jpg) | gemeinfrei (PD) |
+| `images/haende-alter.jpg` | Hände zweier Generationen (Begrenztheit) | Jclk8888 / Pixabay, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Hands-699486.jpg) | CC0 |
 
 Die Fotos wurden für das Web **skaliert** — das ist im Bildnachweis vermerkt, wie es
 **CC BY-SA 4.0** verlangt (Urhebernennung, Lizenz-Link, Änderungshinweis;
