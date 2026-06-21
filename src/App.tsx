@@ -36,9 +36,11 @@ const galleryItems: BentoItem[] = [
   {
     id: 3,
     title: "Der Schein von Objektivität",
-    desc: "Hinter dem neutralen Raster stehen die Werte ihrer Entwickler.",
-    motif: "grid",
-    credit: "Eigene Grafik · CC0",
+    desc: "KI wirkt neutral und unparteiisch wie eine Justitia — und spiegelt doch das Wertesystem ihrer Entwickler.",
+    img: "/images/justitia.jpg",
+    alt: "Justitia-Figur des Gerechtigkeitsbrunnens in Bern: mit verbundenen Augen, Waage und Schwert",
+    focus: "object-[50%_28%]",
+    credit: "Justitiabrunnen Bern (Figur: Hans Gieng, 1543) · Foto: TheBernFiles / Wikimedia Commons · gemeinfrei (PD)",
   },
 ];
 
@@ -189,7 +191,7 @@ export default function App() {
                 </h2>
                 <InteractiveBentoGallery
                   heading="Mensch &amp; Maschine — drei Bilder zum Thema"
-                  subheading="Zum Vergrößern anklicken. Alle Grafiken sind eigene Illustrationen (CC0); ein vollständiger Bildnachweis steht am Seitenende."
+                  subheading="Zum Vergrößern anklicken. Quellen- und Lizenzangaben stehen je Bild und gesammelt im Bildnachweis am Seitenende."
                   items={galleryItems}
                 />
               </Reveal>
@@ -495,8 +497,20 @@ export default function App() {
                     </a>
                     , gemeinfrei (Public Domain).
                   </dd>
-                  <dt>Strichgrafiken (Galerie „Schein der Objektivität", Abschnitt „Begrenztheit")</dt>
-                  <dd>Eigene Illustrationen des Seitenautors · CC0 (gemeinfrei).</dd>
+                  <dt>Justitia, Gerechtigkeitsbrunnen Bern (Galerie „Schein der Objektivität")</dt>
+                  <dd>
+                    Figur: Hans&nbsp;Gieng (1543) · Foto: TheBernFiles /{" "}
+                    <a
+                      href="https://commons.wikimedia.org/wiki/File:Berner_Iustitia.jpg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Wikimedia&nbsp;Commons
+                    </a>
+                    , gemeinfrei (Public Domain).
+                  </dd>
+                  <dt>Strichgrafik (Abschnitt „Begrenztheit")</dt>
+                  <dd>Eigene Illustration des Seitenautors · CC0 (gemeinfrei).</dd>
                 </dl>
                 <p className="note">
                   Hinweis zu <strong>CC&nbsp;BY-SA&nbsp;4.0</strong>: Pflicht zur
